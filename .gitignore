@@ -1,0 +1,9 @@
+.env
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+.env.*
+!.env.example
+/tailscale
