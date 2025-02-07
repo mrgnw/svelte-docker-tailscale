@@ -1,12 +1,24 @@
 # Svelte Docker Tailscale Template
 
-Run your SvelteKit app in Docker with secure Tailscale access.
+## Add these files to an existing project
 
-## Setup
+```sh
+TEMPLATE="https://raw.githubusercontent.com/mrgnw/svelte-docker-tailscale/main"
+mkdir -p config
+```
 
-1. Copy `.env.example` to `.env` and fill in your Tailscale details
-2. Run `docker compose up`
-3. Access your site at your Tailscale domain
+```sh
+curl -O "$TEMPLATE/compose.yml" & \
+curl -O "$TEMPLATE/Dockerfile" & \
+curl -o config/serve.json $TEMPLATE/config/serve.json & \
+(curl -s "$TEMPLATE/.env.example" | tee .env.example .env) & wait
+
+echo "/tailscale" >> .gitignore
+```
+
+# Creating a new project
+
+Use [sv create](https://svelte.dev/docs/cli/sv-create) to create a new svelte project
 
 ## Features
 
@@ -14,3 +26,5 @@ Run your SvelteKit app in Docker with secure Tailscale access.
 - Hot Module Reloading (HMR) support
 - Secure access from any device
 - Uses Bun for faster installs
+
+Downside: It's not exposed locally on a port. It's only served to tailscale
