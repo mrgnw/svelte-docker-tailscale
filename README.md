@@ -28,3 +28,8 @@ Use [sv create](https://svelte.dev/docs/cli/sv-create) to create a new svelte pr
 - Uses Bun for faster installs
 
 Downside: It's not exposed locally on a port. It's only served to tailscale
+
+# Update serve.json hostname
+```sh
+sed -i '' "s/localhost/$(grep TS_CERT_DOMAIN .env | cut -d= -f2)/" config/serve.json
+```
