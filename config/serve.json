@@ -1,11 +1,11 @@
 {
   "TCP": {
-    "${PORT:-443}": {
+    "443": {
       "HTTPS": true
     }
   },
   "Web": {
-    "${TS_CERT_DOMAIN}:${PORT:-443}": {
+    "localhost:443": {
       "Handlers": {
         "/": {
           "Proxy": "http://127.0.0.1:5173"
