@@ -8,7 +8,7 @@ configs:
           }
         },
         "Web": {
-          "$${TS_CERT_DOMAIN:-localhost}:443": {
+          "${TS_CERT_DOMAIN:-localhost}:443": {
             "Handlers": {
               "/": {
                 "Proxy": "http://127.0.0.1:5173"
