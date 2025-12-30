@@ -47,7 +47,7 @@ All configuration is optional except `TS_AUTHKEY`. Defaults are:
 - Project name: directory name
 - Network name: `${COMPOSE_PROJECT_NAME}-network`
 - Hostname: `${COMPOSE_PROJECT_NAME}`
-- Domain: `${COMPOSE_PROJECT_NAME}.$TAILNET`
+- Domain: `${TS_CERT_DOMAIN:-localhost}` (defaults to localhost)
 - Tailscale port: 4164 (override with TS_PORT if running multiple instances)
 - Svelte port: 5173 (internal only)
 
