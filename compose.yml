@@ -1,3 +1,23 @@
+configs:
+  tailscale-serve:
+    content: |
+      {
+        "TCP": {
+          "443": {
+            "HTTPS": true
+          }
+        },
+        "Web": {
+          "${TS_CERT_DOMAIN:-localhost}:443": {
+            "Handlers": {
+              "/": {
+                "Proxy": "http://127.0.0.1:5173"
+              }
+            }
+          }
+        }
+      }
+
 services:
   tailscale:
     image: tailscale/tailscale
@@ -5,7 +25,9 @@ services:
     ports: ["${TS_PORT:-4164}:4164"]
     volumes:
       - ./tailscale:/var/lib/tailscale:rw
-      - ${PWD}/tailscale_serve.json:/config/serve.json:ro
+    configs:
+      - source: tailscale-serve
+        target: /config/serve.json
     environment:
       - TS_SERVE_CONFIG=/config/serve.json
       - TS_AUTHKEY=${TS_AUTHKEY}

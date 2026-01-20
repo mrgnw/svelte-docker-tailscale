@@ -6,19 +6,12 @@ Requires tailscale CLI installed & authenticated
 
 ```sh
 # Get template files
-TAILNET=$(tailscale status --json | jq -r '.MagicDNSSuffix')
 TEMPLATE="https://raw.githubusercontent.com/mrgnw/svelte-docker-tailscale/main"
 curl -O "$TEMPLATE/Dockerfile" & \
-curl -O "$TEMPLATE/compose.yml" & \
-curl -O "$TEMPLATE/tailscale_serve.json" & \
-(curl -s "$TEMPLATE/.env.example" | tee .env) & wait
+curl -O "$TEMPLATE/compose.yml" & wait
 
 # Set up Tailscale config
 echo "/tailscale" >> .gitignore
-
-# Update serve.json with your domain
-DOMAIN="${PWD##*/}.$TAILNET"
-sed -i '' "s/localhost/$DOMAIN/" tailscale_serve.json
 ```
 
 Get an auth key from [Tailscale admin console](https://login.tailscale.com/admin/settings/keys)
@@ -54,7 +47,7 @@ All configuration is optional except `TS_AUTHKEY`. Defaults are:
 - Project name: directory name
 - Network name: `${COMPOSE_PROJECT_NAME}-network`
 - Hostname: `${COMPOSE_PROJECT_NAME}`
-- Domain: `${COMPOSE_PROJECT_NAME}.$TAILNET`
+- Domain: `${TS_CERT_DOMAIN:-localhost}` (defaults to localhost)
 - Tailscale port: 4164 (override with TS_PORT if running multiple instances)
 - Svelte port: 5173 (internal only)
 
